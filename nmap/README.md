@@ -18,55 +18,55 @@
 <i>To open the help menu of nmap we can use the `-h` flag.<br>
 The full command looks like this: `nmap -h`</i>
 
-1. How do you access the help menu?
+1. How do you access the help menu?<br>
    `-h`
 
 <i>The answers for the next twelve questions can be found on the help menu of nmap or can be concluded.</i>
 
-2. What is the first switch listed for a `Syn Scan`?
+2. What is the first switch listed for a `Syn Scan`?<br>
    `-sS`
 
-3. What is the first switch listed for a `UDP Scan`?
+3. What is the first switch listed for a `UDP Scan`?<br>
    `-sU`
 
-4. How to detect operating systems?
+4. How to detect operating systems?<br>
    `-O`
 
-5. How about service version detection?
+5. How about service version detection?<br>
    `-sV`
 
-6. Most people like to see some output to know that their scan is actually doing things, what is the verbosity flag?
+6. Most people like to see some output to know that their scan is actually doing things, what is the verbosity flag?<br>
    `-v`
 
-7. What about 'very verbose'?
+7. What about 'very verbose'?<br>
    `-vv`
 
-8. Sometimes saving output in a common document format can be really handy for reporting, how do we save output in xml format?
+8. Sometimes saving output in a common document format can be really handy for reporting, how do we save output in xml format?<br>
    `-oX`
 
-9. Aggressive scans can be nice when other scans just aren't getting the output that you want and you really don't care how 'loud' you are, what is the switch for enabling this?
+9. Aggressive scans can be nice when other scans just aren't getting the output that you want and you really don't care how 'loud' you are, what is the switch for enabling this?<br>
     `-A`
 
-10. How do I set the timing to the max level, sometimes called 'Insane'?
+10. How do I set the timing to the max level, sometimes called 'Insane'?<br>
     `-T5`
 
-11. What about if I want to scan a specific port?
+11. What about if I want to scan a specific port?<br>
     `-p`
 
-12. How about if I want to scan every port?
+12. How about if I want to scan every port?<br>
     `-p-`
 
-13. What if I want to enable using a script from the nmap scripting engine?
+13. What if I want to enable using a script from the nmap scripting engine?<br>
     `--script`
 
 <i>To list all possible categories we have to visit nmap's [homepage](https://nmap.org/book/nse-usage.html). Now we can use see that `vuln` is a possibility.</i>
 
-14. What if I want to run all scripts out of the vulnerability category?
+14. What if I want to run all scripts out of the vulnerability category?<br>
     `--script vuln`
 
 <i>This switch can also be found on the help menu.</i>
 
-15. What switch should I include if I don't want to ping the host?
+15. What switch should I include if I don't want to ping the host?<br>
     `-Pn`
 
 ## Task 3
@@ -74,7 +74,7 @@ The full command looks like this: `nmap -h`</i>
 <i>we should perform a syn scan on the target machine. To do so we can use the `-sS` flag. It could be that you need root privileges to run this command. In that case run the command with `sudo`.<br>
 The full command looks like this: `nmap -sS MACHINE_IP`</i>
 
-1. What will this command be without the MACHINE_IP address?
+1. What will this command be without the MACHINE_IP address?<br>
    `nmap -sS`
 
 <i>After scanning nmap returns the following output. We can see that two ports are exposed by the machine.</i>
@@ -85,12 +85,12 @@ PORT   STATE SERVICE
 <b>80/tcp open  http</b>
 </pre>
 
-1. How many ports do we find open under 1000?
+1. How many ports do we find open under 1000?<br>
    `2`
 
 <i>We can also find the given protocol for the ports. `tcp` stands for `Transmission Control Protocol`. It is part of some common network protocols.</i>
 
-3. What communication protocol is given for these ports following the port number?
+3. What communication protocol is given for these ports following the port number?<br>
    `tcp`
 
 <i>The next question asks for the ssh service version. To scan for versions we can use the `-sV` flag.<br>
@@ -104,7 +104,7 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 </pre>
 
-4. What is the version of the software running on port 22?
+4. What is the version of the software running on port 22?<br>
    `6.6.1p1`
 
 <i>Now we can perform an aggressive scan with the `-A` flag.<br>
@@ -132,7 +132,7 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 </pre>
 
-5. What flag is not set under the results for port 80?
+5. What flag is not set under the results for port 80?<br>
    `httponly`
 
 <i>At this point we can scan for some vulnerabilities. Using the `--script vuln` flag enables us the possibility to search for vulberabilities.</i>
@@ -175,5 +175,5 @@ PORT   STATE SERVICE
 |_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
 </pre>
 
-6. What denial of service (DOS) attack is this box susceptible to?
+6. What denial of service (DOS) attack is this box susceptible to?<br>
    `http-slowloris-check`
