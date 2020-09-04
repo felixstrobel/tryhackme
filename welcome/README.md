@@ -25,12 +25,12 @@
 
 <i>Lets get you accessing your first machine! Deploy the machine attached to this task and wait 1 minute for it to configure. To deploy click the green `Deploy` button.</i>
 
-1. Go to your machines website (http://MACHINE_IP) - What is the flag text shown on the machines webpage?
+1. Go to your machines website (http://MACHINE_IP) - What is the flag text shown on the machines webpage?<br>
    `flag{connection_verified}`
 
 ## Task 4
 
 <i>Now you've managed to deploy and access a TryHackMe machine, search for a security topic to learn on the [Hacktivities](https://tryhackme.com/hacktivities) page.</i>
 
-1. Read the above and explore TryHackMe!
+1. Read the above and explore TryHackMe!<br>
    `No answer needed.`
