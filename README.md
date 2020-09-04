@@ -1,5 +1,5 @@
 # TryHackMe Notes
-Here are notes for all my tryhackme rooms:
+Here are notes for all my [TryHackMe](https://tryhackme.com) rooms:
 
 + [Basic Pentesting](./basic_pentesting/README.md)
 + [Blue](./blue/README.md)
