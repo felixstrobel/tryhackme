@@ -71,7 +71,7 @@ The full command looks like this: `nmap -h`</i>
 
 ## Task 3
 
-<i>we should perform a syn scan on the target machine. To do so we can use the `-sS` flag. It could be that you need root privileges to run this command. In that case run the command with `sudo`.<br>
+<i>We can perform a syn scan on the target machine. To do so we can use the `-sS` flag. It could be that you need root privileges to run this command. In that case run the command with `sudo`.<br>
 The full command looks like this: `nmap -sS MACHINE_IP`</i>
 
 1. What will this command be without the MACHINE_IP address?<br>
