@@ -11,4 +11,4 @@ Here are notes for all my [TryHackMe](https://tryhackme.com) rooms:
 - [x] [Nmap](./nmap/README.md)
 - [ ] [OpenVPN](./openvpn/README.md)
 - [ ] [Vulnversity](./vulnversity/README.md)
-- [Welcome](./welcome/README.md)
+- [x] [Welcome](./welcome/README.md)
