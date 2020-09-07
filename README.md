@@ -3,6 +3,7 @@ Here are notes for all my [TryHackMe](https://tryhackme.com) rooms:
 
 + [Basic Pentesting](./basic_pentesting/README.md)
 + [Blue](./blue/README.md)
++ [Crack The Hash](./crack_the_hash/README.md)
 + [Injection](./injection/README.md)
 + [Introductory Researching](./introductory_researching/README.md)
 + [Metasploit](./metasploit/README.md)
