@@ -29,7 +29,7 @@ cbfdac6008f9cab4083784cbd1874f76618d2a97:<b>password123</b>
 2. CBFDAC6008F9CAB4083784CBD1874F76618D2A97<br>
    `password123`
 
-<i>This hash is also a `SHA` one but this time not a `SHA1`. It is a `SHA2-256` with the mode code 1400.<br>
+<i>This hash is also a `SHA` one but this time not a `SHA1 but a `SHA2-256` with the mode code 1400.<br>
 Here is the command: `hashcat -m 1400 1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032 ./rockyou.txt`<br>
 This one was also easy to crack.</i>
 
@@ -42,7 +42,7 @@ This one was also easy to crack.</i>
 
 <i>Here we have a `bcrypt-blowfish` hash. It has the mode number 3200. For this hash it is easier if we `echo` the hash into a file. Do it like this: `echo \$2y\$12\$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom > hash`. We have to escape the `$`.<br>
 The full command looks like this: `hashcat -m 3200 hash ./rockyou.txt`<br>
-This hash can take a while to crack. Be pacient and you will get the cracked hash.</i>
+This hash can take a while to crack. Be patient and you will receive the cracked hash.</i>
 
 <pre>
 $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom:<b>bleh</b>
@@ -84,7 +84,7 @@ So the full command looks like this: `hashcat -m 1000 1DFECA0C002AE40B8619ECF948
 2. 1DFECA0C002AE40B8619ECF94819CC1B<br>
    `n63umy8lkf4i`
 
-<i>The third question gives us a really long hash. It is `SHA512` with the number 1800 and for this one we again have to `echo` the hash in a file. To do so we can use: `echo \$6\$aReallyHardSalt\$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02. > hash`. Now we can start cracking.<br>
+<i>The third question gives a really long hash. It is `SHA512` with the number 1800 and for this one we again have to `echo` the hash in a file. To do so we can use: `echo \$6\$aReallyHardSalt\$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02. > hash`. Now we can start cracking.<br>
 The full command looks like this: `hashcat -m 1800 hash ./rockyou.txt`</i>
 
 <pre>
