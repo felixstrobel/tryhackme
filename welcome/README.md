@@ -12,7 +12,7 @@
 <i>Think of a room like a virtual classroom that teaches a security topic. You'll use a mixture of guides and challenges to upskill in different areas of cyber security.</i>
 
 1. Rooms include questions that award you points, use the leaderboards to see where you rank against other fellow hackers.<br>
-   `No answer needed.`<br>
+   `No answer needed.`
 
 ## Task 2
 
