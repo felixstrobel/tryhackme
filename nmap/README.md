@@ -8,7 +8,7 @@
 
 ## Task 1
 
-<i>[Nmap](https://nmap.org) is an incredibly valuable tool in the world of penetration testing. In this room, we will cover the basics of using Nmap to effectively scan a target, gaining insight for further attacks!</i>
+<i>[Nmap](https://nmap.org) is an incredibly valuable tool in the world of penetration testing. In this room, we will cover the basics from using nmap to effectively scan a target, gaining insight for further attacks.</i>
 
 1. Deploy the machine.<br>
    `No answer needed.`
@@ -59,7 +59,7 @@ The full command looks like this: `nmap -h`</i>
 13. What if I want to enable using a script from the nmap scripting engine?<br>
     `--script`
 
-<i>To list all possible categories we have to visit nmap's [homepage](https://nmap.org/book/nse-usage.html). Now we can use see that `vuln` is a possibility.</i>
+<i>To list all possible categories we have to visit nmap's [homepage](https://nmap.org/book/nse-usage.html). Now we can see that `vuln` is a possibility.</i>
 
 14. What if I want to run all scripts out of the vulnerability category?<br>
     `--script vuln`
@@ -71,13 +71,13 @@ The full command looks like this: `nmap -h`</i>
 
 ## Task 3
 
-<i>We can perform a syn scan on the target machine. To do so we can use the `-sS` flag. It could be that you need root privileges to run this command. In that case run the command with `sudo`.<br>
+<i>We can perform a syn scan on the target machine. To do so we can use the `-sS` flag. It could be that you need root privileges to run this command. In this case, run the command with `sudo`.<br>
 The full command looks like this: `nmap -sS MACHINE_IP`</i>
 
 1. What will this command be without the MACHINE_IP address?<br>
    `nmap -sS`
 
-<i>After scanning nmap returns the following output. We can see that two ports are exposed by the machine.</i>
+<i>After scanning, nmap returns the following output. We can see that two ports are exposed by the machine.</i>
 
 <pre>
 PORT   STATE SERVICE
@@ -88,7 +88,7 @@ PORT   STATE SERVICE
 1. How many ports do we find open under 1000?<br>
    `2`
 
-<i>We can also find the given protocol for the ports. `tcp` stands for `Transmission Control Protocol`. It is part of some common network protocols.</i>
+<i>We can also find the protocol given for the ports. `tcp` stands for `Transmission Control Protocol`. It is part of some common network protocols.</i>
 
 3. What communication protocol is given for these ports following the port number?<br>
    `tcp`
@@ -135,7 +135,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 5. What flag is not set under the results for port 80?<br>
    `httponly`
 
-<i>At this point we can scan for some vulnerabilities. Using the `--script vuln` flag enables us the possibility to search for vulberabilities.</i>
+<i>At this point we can scan for some vulnerabilities. Using the `--script vuln` flag enables us to search for vulnerabilities.</i>
 
 <pre>
 PORT   STATE SERVICE
