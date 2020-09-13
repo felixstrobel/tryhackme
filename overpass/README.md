@@ -6,9 +6,9 @@
 
 ## Task 1
 
-<i>To get some informations about the system we can make a simple [nmap](https://nmap.org) scan. Using the `-sC` flag to use the default scripts and the `-sV` flag to determine versions of the services.<br>
+<i>To get some information on the system we can perform a simple [nmap](https://nmap.org) scan. Using the `-sC` flag means using the default scripts. The `-sV` flag determines the versions of the services.<br>
 The full command looks like this: `nmap -sC -sV MACHINE_IP`<br>
-After scanning we can see a ssh and an http service running.</i>
+After scanning we can see an ssh and an http service running.</i>
 
 <pre>
 PORT   STATE SERVICE VERSION
@@ -22,9 +22,9 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 </pre>
 
-<i>Looking at the website does show us a link to a download page and gives us the possibility to download the source code. Now we can make a simple [gobuster](https://github.com/OJ/gobuster) scan for good practive and to be sure we did not missed any important informations. We will use the `-u` to specify our target and the `-w` to specify a wordlist. I am using the [`common.txt`](https://gitlab.com/kalilinux/packages/dirb/-/blob/kali/master/wordlists/common.txt).<br>
+<i>The website shows a link to a download page and gives us the possibility to download the source code. Now we can perform a simple [gobuster](https://github.com/OJ/gobuster) scan for good practice and to be sure we did not miss any important information. We will use the `-u` flag to specify our target and the `-w` flag to specify a wordlist. I am using the [`common.txt`](https://gitlab.com/kalilinux/packages/dirb/-/blob/kali/master/wordlists/common.txt).<br>
 The full command looks like this: `gobuster dir -u "http://MACHINE_IP" -w ./common.txt`<br>
-When the scan finsihes we see a `/admin` directory we haven't seen before.</i>
+When the scan has finished we see a `/admin` directory we haven't recognized before.</i>
 
 <pre>
 /aboutus (Status: 301)
@@ -35,7 +35,7 @@ When the scan finsihes we see a `/admin` directory we haven't seen before.</i>
 /index.html (Status: 301)
 </pre>
 
-<i>Looking at it shows us a login form. With having a look on the source code we can see a `login.js` file which is loaded when the `body` element is loaded. When searching in the `login.js` file for a vulnerability we can recognize that the `SessionToken` cookie has to be set and there is no validation. We can open our webbrowser and open the developer console and switch to the Application tab. Under cookies we can create our own one and name it `SessionToken`. The value does not matter. Then we can reload the page and see that we are 'logged' in. The webpage shows us now a ssh private key.</i>
+<i>This `/admin` directory contains a login form. Looking at the source code we detect a `login.js` file. When searching the `login.js` file for a vulnerability we can recognize that the `SessionToken` cookie has to be set to log-in. We can start our webbrowser, open the developer console and switch to the Application tab. Under cookies we can create our own and call it `SessionToken`. The value does not matter. Then we can reload the page and see that we are 'logged in'. The webpage shows now an ssh key.</i>
 
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
